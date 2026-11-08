@@ -14,5 +14,6 @@ for f in Kanit-Bold Kanit-BoldItalic Kanit-ExtraBoldItalic Kanit-SemiBold; do
 done
 cp -n "$SK/templates/project_template.json" "$ROOT/project.json" 2>/dev/null || true
 cp -n "$SK/templates/edl_template.py" "$ROOT/work/edl.py" 2>/dev/null || true
+cp -n "$SK"/assets/*.png "$ROOT/sprites/" 2>/dev/null || true
 ffmpeg -hide_banner -encoders 2>/dev/null | grep -q hevc_videotoolbox && echo "encoder: Apple VideoToolbox (fast)" || echo "encoder: libx265/libx264 (software, slower)"
 echo "ready: $ROOT"
