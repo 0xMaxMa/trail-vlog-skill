@@ -1,0 +1,31 @@
+{
+  "output_name": "trail_vlog",
+  "title": "<จุดเริ่ม> → <จุดหมาย>",
+  "subtitle": "<ชื่องาน / บริบท เช่น RACE DAY · XYZ TRAIL 50K>",
+  "stats_line": "<ระยะ> KM  |  +<ไต่ขึ้น> M  |  <เวลา> HRS",
+  "summary_lines": [
+    "//// สรุปวันนี้",
+    "<ระยะ> km  ·  <เวลา>",
+    "ไต่ขึ้น +<x> m  ·  ลง −<y> m",
+    "จุดสูงสุด <z> m",
+    "หัวใจ เฉลี่ย <avg> / สูงสุด <max> bpm",
+    "<kcal> kcal  ·  <ข้อความปิด>"
+  ],
+  "camera_offset_s": 0,
+  "prestart_km": 0.0,
+  "utc_offset_h": 7,
+  "fit_file": "garmin/<activity>.fit",
+  "theme": {"primary": "#1D5FB4", "paper": "#F4F1E8", "accent": "#41A6E8", "light": "#A6E8FF"},
+  "music_prompts": {},
+  "stickers": [],
+  "srt_fixes": [["คอสโค้ด", "Claude Code"], ["สปีดเท้า", "speed ramp"]],
+  "cover": {
+    "art": "cover/art.png",
+    "band_text": "<ข้อความบนแถบสีด้านบน>",
+    "headline": "<หัวข้อใหญ่ เช่น ซ้อมเทรล 17.5 KM>",
+    "route": "<จุดเริ่ม> → <จุดหมาย>",
+    "stats": "+<x> M  |  <h> HRS  |  <dd.mm.yyyy>",
+    "logo": "",
+    "logo_box": true
+  }
+}
