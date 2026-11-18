@@ -18,6 +18,22 @@
 #     bling=<clip s>, bling_dur=4.0, bling_label='...', track=[(clip_s, eye_x, eye_y), ...]
 #                                              sunglasses + gold chain PNGs (sprites/glasses.png, chain.png) that
 #                                              follow a head; eye coords in 1920x1080, keyframe every ~2 s
+#   sentence edges (speech is snapped to whole phrases from STT word times by default):
+#     snap=False                              keep a/b exactly;  hard_a=True / hard_b=True keep one edge exactly
+#     max_back=3.0, max_fwd=3.5               how far snapping may move an edge (s)
+#     tight=False                             don't remove pauses inside a 'sp' piece (keeps breathing room / timing)
+#   race graphics (need project.json "stations": [[code, name, km, 'HH:MM:SS'], ...] from the official result slip):
+#     st='A3', st_at=<clip s>, st_dur=8.5    station card: whole-course profile, done part, next leg, "อยู่ตรงนี้ ▼"
+#     where=True                              same card mid-leg ("we are here" between stations)
+#     boss=(km0, km1, 'LAST MAN', 'tag'), boss_at=<clip s>, boss_dur=   profile with the named climb marked
+#     banner=('หัวข้อ', 'บรรทัดรอง'), banner_at=<clip s>, banner_dur=4   short lower-left text insert
+#                                              (users prefer these over dense full-screen data cards)
+#     call='...', call_at=<clip s>            callout tag at a given moment (names: "พี่หลิน แก๊งสาวลับแล")
+#     overlay=('sprites/map.png', w, x, y)    still picture over the shot (e.g. route map with the target ringed)
+#   misc: freeze=0.6 (hold last frame), hud=False (no HUD, e.g. photos without EXIF time), vol=0.5, lift=0.06 (brighten),
+#         stamp_fs=140 (smaller stamp text); an empty stamp_sub is skipped.
+#   photos: g('ph', 0, 3, 'ph', photo='Photo/image/IMG_1.JPG', kb='in', real=<datetime for the HUD>, fy=0.42, bright=1.0)
+#           (write a small img() helper in edl.py that reads EXIF DateTimeOriginal for `real`)
 S = []
 def sec(name, music, chapter=None): S.append({'name': name, 'music': music, 'chapter': chapter, 'segs': []})
 def g(clip, a, b, mode='sp', speed=1.0, **kw): S[-1]['segs'].append(dict(clip=clip, a=a, b=b, mode=mode, speed=speed, **kw))

@@ -15,10 +15,24 @@
   "prestart_km": 0.0,
   "utc_offset_h": 7,
   "fit_file": "garmin/<activity>.fit",
-  "theme": {"primary": "#1D5FB4", "paper": "#F4F1E8", "accent": "#41A6E8", "light": "#A6E8FF"},
+  "theme": {
+    "primary": "#1D5FB4",
+    "paper": "#F4F1E8",
+    "accent": "#41A6E8",
+    "light": "#A6E8FF"
+  },
   "music_prompts": {},
   "stickers": [],
-  "srt_fixes": [["คอสโค้ด", "Claude Code"], ["สปีดเท้า", "speed ramp"]],
+  "srt_fixes": [
+    [
+      "คอสโค้ด",
+      "Claude Code"
+    ],
+    [
+      "สปีดเท้า",
+      "speed ramp"
+    ]
+  ],
   "cover": {
     "art": "cover/art.png",
     "band_text": "<ข้อความบนแถบสีด้านบน>",
@@ -27,5 +41,51 @@
     "stats": "+<x> M  |  <h> HRS  |  <dd.mm.yyyy>",
     "logo": "",
     "logo_box": true
+  },
+  "speech_lufs": -19.0,
+  "end_card": true,
+  "stations": [
+    [
+      "START",
+      "<จุดปล่อยตัว>",
+      0,
+      "05:00:00"
+    ],
+    [
+      "A1",
+      "<ชื่อ>",
+      12.4,
+      "<เวลาจริงจากสลิป HH:MM:SS, เกิน 24 ชม. หลังเที่ยงคืน>"
+    ],
+    [
+      "FINISH",
+      "<เส้นชัย>",
+      100.0,
+      "<HH:MM:SS>"
+    ]
+  ],
+  "reel": {
+    "a": 0.0,
+    "b": 45.5,
+    "headline": "<ชื่องานสั้นๆ>",
+    "subline": "TRAIL RUN · <DD MON YYYY> · <HH:MM>",
+    "chips": [
+      [
+        "DISTANCE",
+        "ระยะทาง",
+        "<x> km."
+      ],
+      [
+        "TOTAL ASCENT",
+        "ระยะไต่สะสม",
+        "+<y> m."
+      ]
+    ],
+    "tagline": "<ประโยคเด็ดหนึ่งบรรทัด ไม่สปอยผล>",
+    "cta": "ดูคลิปเต็ม <n> นาที · ลิงก์ในคอมเมนต์",
+    "end_text": [
+      "ดูคลิปเต็ม <n> นาที",
+      "ลิงก์ในคอมเมนต์"
+    ]
   }
 }

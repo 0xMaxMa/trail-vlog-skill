@@ -1,19 +1,20 @@
 """Garmin .FIT -> garmin/records.json + printed summary, km splits and stops (for clock alignment).
 usage: python garmin.py <project_root> <file.fit> [utc_offset_hours=7]
-records.json rows: [local_seconds_of_day, hr, altitude_m, distance_m, lat, lon]"""
+records.json rows: [local_seconds_since_midnight_of_start_day, hr, altitude_m, distance_m, lat, lon]
+(keeps counting past 86400 when an activity crosses midnight, so the list stays sorted)"""
 import sys, os, json, datetime as dt, fitparse
 root, fit = sys.argv[1], sys.argv[2]; tz = float(sys.argv[3]) if len(sys.argv) > 3 else 7
 f = fitparse.FitFile(fit)
-rows = []
+rows = []; day0 = None
 for m in f.get_messages('record'):
-    r = {d.name: d.value for d in m}; t = r['timestamp'] + dt.timedelta(hours=tz)
+    r = {d.name: d.value for d in m}; t = r['timestamp'] + dt.timedelta(hours=tz); day0 = day0 or t.date()
     la, lo = r.get('position_lat'), r.get('position_long')
-    rows.append([t.hour * 3600 + t.minute * 60 + t.second, r.get('heart_rate'), r.get('enhanced_altitude') or r.get('altitude'),
+    rows.append([(t.date() - day0).days * 86400 + t.hour * 3600 + t.minute * 60 + t.second, r.get('heart_rate'), r.get('enhanced_altitude') or r.get('altitude'),
                  r.get('distance'), la * 180 / 2**31 if la else None, lo * 180 / 2**31 if lo else None])
 os.makedirs(os.path.join(root, 'garmin'), exist_ok=True)
 json.dump(rows, open(os.path.join(root, 'garmin', 'records.json'), 'w'))
 S = {d.name: d.value for m in f.get_messages('session') for d in m}
-hms = lambda s: f'{int(s//3600):02d}:{int(s%3600//60):02d}:{int(s%60):02d}'
+hms = lambda s: f'{int(s//3600%24):02d}:{int(s%3600//60):02d}:{int(s%60):02d}'
 print(f"start {hms(rows[0][0])}  end {hms(rows[-1][0])}  records {len(rows)}")
 for k in ('total_distance', 'total_elapsed_time', 'total_ascent', 'total_descent', 'avg_heart_rate', 'max_heart_rate', 'total_calories'):
     print(f'{k}: {S.get(k)}')

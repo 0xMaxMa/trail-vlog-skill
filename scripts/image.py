@@ -10,7 +10,7 @@ ref = sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] else None
 size = sys.argv[4] if len(sys.argv) > 4 else '1792x1024'
 model = sys.argv[5] if len(sys.argv) > 5 else 'codex-image/gpt-image'
 B = os.environ.get('GETPOD_URL', 'https://provider.getpod.ai'); K = os.environ['GETPOD_KEY']
-H = {'Authorization': f'Bearer {K}', 'Content-Type': 'application/json'}
+H = {'Authorization': f'Bearer {K}', 'Content-Type': 'application/json', 'User-Agent': 'trail-vlog/1.0'}  # Cloudflare blocks the default Python UA (error 1010)
 body = {'model': model, 'prompt': prompt, 'size': size, 'n': 1}
 if ref: body['image'] = ref
 job = json.loads(urllib.request.urlopen(urllib.request.Request(f'{B}/v1/images/generations', json.dumps(body).encode(), H), timeout=60).read())
@@ -21,5 +21,7 @@ for _ in range(120):
     time.sleep(5)
 if d.get('status') != 'done': sys.exit(f'failed: {d.get("error")}')
 im = d['images'][0]
-data = base64.b64decode(im.split(',', 1)[1]) if im.startswith('data:') else urllib.request.urlopen(im).read()
+if im.startswith('data:'): data = base64.b64decode(im.split(',', 1)[1])
+elif im.startswith('http'): data = urllib.request.urlopen(urllib.request.Request(im, headers={'User-Agent': 'trail-vlog/1.0'})).read()
+else: data = base64.b64decode(im)          # some providers return bare base64
 open(out, 'wb').write(data); print('saved', out, 'cost', d.get('cost'))
