@@ -12,7 +12,9 @@ def fmt(x):
 cues = []
 for p in TL:
     if p['speed'] != 1.0 or p['mode'] == 'br': continue
-    d = json.load(open((glob.glob(f"stt/{p['clip']}.json") or glob.glob(f"stt/*_{p['clip']}_*.json"))[0]))
+    sf = glob.glob(f"stt/{p['clip']}.json") or glob.glob(f"stt/*_{p['clip']}_*.json")
+    if p['mode'] == 'ph' or not sf: continue          # photos / other cameras: no transcript
+    d = json.load(open(sf[0]))
     ws = [w for w in d['words'] if w['type'] == 'word' and w['start'] >= p['a'] - 0.05 and w['end'] <= p['b'] + 0.05]
     groups = []
     for w in ws:
